@@ -1,21 +1,20 @@
-<?php if ($storeData === true) { ?>
-<div class="updated"><p><strong><?php echo __('Einstellungen gespeichert.', 'menu' ) ?></strong></p></div>
-<?php } ?>
+<?php include __DIR__ . '/messages.html'; ?>
+
 <div class="wrap">
-    <h2><?php echo __( 'Ionic User Push › Settings', 'menu' ) ?></h2>
+    <?php include __DIR__ . '/tabs.html'; ?>
     <form name="form1" method="post" action="">
         <table class="form-table">
             <tr>
                 <th scope="row"><b><?php echo __("App id", 'menu' ) ?></b></th>
                 <td>
-                    <input type="text" name="appId" class="regular-text" placeholder="fb0dff48" value="<?php echo stripslashes($option['appId']) ?>">
+                    <input type="text" name="appId" class="regular-text" placeholder="fb0dff48" value="<?php echo stripslashes($options['appId']) ?>">
                     <p class="description"><?php echo __("You can find this information on the ionic dashboard https://apps.ionic.io/apps", 'menu' ) ?></p>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><b><?php echo __("Private api key", 'menu' ) ?></b></th>
                 <td>
-                    <input type="text" name="privateApiKey" class="regular-text" placeholder="44dc2a6bfafc7000dfe11e3d65fff08f624674acbda620bb" value="<?php echo stripslashes($option['privateApiKey']) ?>">
+                    <input type="text" name="privateApiKey" class="regular-text" placeholder="44dc2a6bfafc7000dfe11e3d65fff08f624674acbda620bb" value="<?php echo stripslashes($options['privateApiKey']) ?>">
                     <p class="description"><?php echo __("You can find this information in the settings of your ionic app", 'menu' ) ?></p>
                 </td>
             </tr>

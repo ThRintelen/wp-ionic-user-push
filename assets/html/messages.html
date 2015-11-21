@@ -1,0 +1,6 @@
+<?php if ($storeData === true) { ?>
+    <div class="updated"><p><strong><?php echo __('Einstellungen gespeichert.', 'menu' ) ?></strong></p></div>
+<?php } ?>
+<?php if (empty($error) === false) { ?>
+    <div class="error"><p><strong><?php echo $error ?></strong></p></div>
+<?php } ?>

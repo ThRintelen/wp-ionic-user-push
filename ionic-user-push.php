@@ -22,6 +22,7 @@ You should have received a copy of the GNU General Public License along with thi
 define( 'IUP_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 
 require_once IUP_PLUGIN_DIR_PATH . 'includes/class-iup.php';
+require_once IUP_PLUGIN_DIR_PATH . 'includes/class-iup-send-push.php';
 
 register_activation_hook( IUP_PLUGIN_DIR_PATH, array( 'Ionic_User_Push', 'plugin_activation' ) );
 
