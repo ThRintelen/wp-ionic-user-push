@@ -13,8 +13,8 @@ class Ionic_User_Push_Admin {
         }
 
         // Store / load data from / to options
-        $storeData = Ionic_User_Push_Admin::storeOption($option_name, $_POST);
-        $options = Ionic_User_Push_Admin::loadOptions($option_name);
+        $storeData = self::store_option($option_name, $_POST);
+        $options = self::load_options($option_name);
 
         if (empty($_POST['send-push']) === false) {
             // Send push notification
@@ -36,7 +36,7 @@ class Ionic_User_Push_Admin {
      * @param string $option_name
      * @return mixed
      */
-    private function loadOptions($option_name) {
+    private function load_options($option_name) {
         $option_string = get_option($option_name);
 
         if ($option_string === false) {
@@ -51,7 +51,7 @@ class Ionic_User_Push_Admin {
      * @param array $post
      * @return bool
      */
-    private function storeOption($option_name, array $post) {
+    private function store_option($option_name, array $post) {
         $option = array();
         $storeData = false;
 

@@ -24,10 +24,14 @@ define( 'IUP_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 require_once IUP_PLUGIN_DIR_PATH . 'includes/class-iup.php';
 require_once IUP_PLUGIN_DIR_PATH . 'includes/class-iup-send-push.php';
 
-register_activation_hook( IUP_PLUGIN_DIR_PATH, array( 'Ionic_User_Push', 'plugin_activation' ) );
+register_activation_hook( __FILE__, array( 'Ionic_User_Push', 'plugin_activation' ) );
 
 if ( is_admin() ) {
     require_once IUP_PLUGIN_DIR_PATH . 'includes/class-iup-admin.php';
 
     add_action('admin_menu', array( 'Ionic_User_Push_Admin', 'admin_menu' ));
+} else {
+    require_once IUP_PLUGIN_DIR_PATH . 'includes/class-iup-database-manager.php';
+
+    add_action( 'init', array( 'Ionic_User_Push', 'process_parameter') );
 }
