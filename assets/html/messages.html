@@ -1,5 +1,8 @@
+<?php if ($sendPushReturn instanceof stdClass) { ?>
+    <div class="updated"><p><strong><?php printf(__('Push message has been sent (message id: %s)', 'menu' ), $sendPushReturn->message_id); ?></strong></p></div>
+<?php } ?>
 <?php if ($storeData === true) { ?>
-    <div class="updated"><p><strong><?php echo __('Einstellungen gespeichert.', 'menu' ) ?></strong></p></div>
+    <div class="updated"><p><strong><?php echo __('Stored settings.', 'menu' ) ?></strong></p></div>
 <?php } ?>
 <?php if (empty($error) === false) { ?>
     <div class="error"><p><strong><?php echo $error ?></strong></p></div>

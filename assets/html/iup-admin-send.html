@@ -12,10 +12,10 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row"><b><?php echo __("Ionic user ids", 'menu' ) ?></b></th>
+                <th scope="row"><b><?php echo __("Ionic user id(s)", 'menu' ) ?></b></th>
                 <td>
-                    <textarea name="send-user-ids" class="large-text" placeholder="user-id-1;user-id-2;user-id-3;..."></textarea>
-                    <p class="description"><?php echo __("Leave empty to send to all user ids", 'menu' ) ?></p>
+                    <textarea name="send-user-ids" class="large-text" placeholder="user-id-1;user-id-2;user-id-3;..."></textarea><br>
+                    <input type="checkbox" name="send-to-all"> <?php printf(__("Or send push notification to all (<b>%d</b>) ionic user ids", 'menu' ), $totalUserIds) ?>
                 </td>
             </tr>
         </table>

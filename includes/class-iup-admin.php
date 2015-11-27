@@ -15,12 +15,20 @@ class Ionic_User_Push_Admin {
         // Store / load data from / to options
         $storeData = self::store_option($option_name, $_POST);
         $options = self::load_options($option_name);
+        $totalUserIds = Ionic_User_Database_Manager::get_total_userIds();
 
         if (empty(filter_input(INPUT_POST, 'send-push')) === false) {
             // Send push notification
-            $return = Ionic_User_Send_Push::sendPushNotification(filter_input(INPUT_POST, 'send-text'), explode(';', filter_input(INPUT_POST, 'send-user-ids')), $options);
-            if ( is_wp_error( $return ) ) {
-                $error = $return->get_error_message();
+
+            if (filter_input(INPUT_POST, 'send-to-all') !== null) {
+                $userIds = Ionic_User_Database_Manager::get_all_userIds();
+            } else {
+                $userIds = explode(';', filter_input(INPUT_POST, 'send-user-ids'));
+            }
+
+            $sendPushReturn = Ionic_User_Send_Push::send_push_notification(filter_input(INPUT_POST, 'send-text'), $userIds, $options);
+            if ( is_wp_error( $sendPushReturn ) ) {
+                $error = $sendPushReturn->get_error_message();
             }
         }
 

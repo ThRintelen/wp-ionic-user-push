@@ -45,6 +45,34 @@ class Ionic_User_Database_Manager {
     }
 
     /**
+     * @return null|string
+     */
+    public function get_total_userIds() {
+        global $wpdb;
+
+        return $wpdb->get_var( "SELECT COUNT(`" . self::USER_ID_FIELD_USER_ID . "`) FROM `{$wpdb->prefix}" . self::USER_ID_TABLE_NAME . "`" );
+    }
+
+    /**
+     * @return array
+     */
+    public function get_all_userIds() {
+        global $wpdb;
+
+        $result = $wpdb->get_results( "SELECT `" . self::USER_ID_FIELD_USER_ID . "` FROM `{$wpdb->prefix}" . self::USER_ID_TABLE_NAME . "`" );
+        if ($result === null) {
+            return array();
+        }
+
+        $userIds = array();
+        foreach ($result as $row) {
+            $userIds[] = $row->userId;
+        }
+
+        return $userIds;
+    }
+
+    /**
      * @param int $pagenum
      * @param int $limit
      * @return array
@@ -53,7 +81,7 @@ class Ionic_User_Database_Manager {
         global $wpdb;
 
         $offset = ( $pagenum - 1 ) * $limit;
-        $total = $wpdb->get_var( "SELECT COUNT(`" . self::USER_ID_FIELD_USER_ID . "`) FROM `{$wpdb->prefix}" . self::USER_ID_TABLE_NAME . "`" );
+        $total = self::get_total_userIds();
         $num_of_pages = ceil( $total / $limit );
         $results = $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}" . self::USER_ID_TABLE_NAME . "` LIMIT $offset, $limit" );
 

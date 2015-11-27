@@ -8,9 +8,13 @@ class Ionic_User_Send_Push {
      * @param array $options
      * @return WP_Error
      */
-    public function sendPushNotification($text, array $userIds, array $options) {
-        if (empty($text) || count($userIds) === 0 || empty($userIds[0])) {
-            return new WP_Error( 'broke', __( "Missing text or user ids to send push notification!", "menu" ) );
+    public function send_push_notification($text, array $userIds, array $options) {
+        if (empty($text)) {
+            return new WP_Error( 'broke', __( "Missing text to send push notification!", "menu" ) );
+        }
+
+        if (count($userIds) === 0 || empty($userIds[0]) === true) {
+            return new WP_Error( 'broke', __( "Missing users ids to send push notification!", "menu" ) );
         }
 
         if (empty($options['appId']) || empty($options['privateApiKey'])) {
@@ -38,6 +42,8 @@ class Ionic_User_Send_Push {
         if ($result->result === 'error') {
             return new WP_Error( 'broke', __( $result->message, "menu" ) );
         }
+
+        return $result;
     }
 
 }
