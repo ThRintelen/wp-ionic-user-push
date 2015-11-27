@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/class-iup-history-manager.php';
+
 class Ionic_User_Send_Push {
 
     /**
@@ -38,6 +40,9 @@ class Ionic_User_Send_Push {
         ));
         $result = json_decode(curl_exec($ch));
         curl_close($ch);
+
+        $historyManager = new Ionic_User_History_Manager();
+        $historyManager->store_history($text, count($userIds), $result);
 
         if ($result->result === 'error') {
             return new WP_Error( 'broke', __( $result->message, "menu" ) );

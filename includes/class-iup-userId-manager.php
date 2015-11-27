@@ -1,13 +1,27 @@
 <?php
+require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
-class Ionic_User_Database_Manager {
-
-    const LOG_TABLE_NAME = 'iup_push_log';
+class Ionic_User_UserId_Manager {
 
     const USER_ID_TABLE_NAME = 'iup_user_ids';
-    CONST USER_ID_FIELD_USER_ID = 'userId';
+    const USER_ID_FIELD_USER_ID = 'userId';
     const USER_ID_FIELD_LAST_TOUCHED = 'lastTouched';
     const USER_ID_FIELD_CREATED = 'created';
+
+    public function create_user_id_table() {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . self::USER_ID_TABLE_NAME;
+
+        $sql = "CREATE TABLE $table_name (
+          `" . self::USER_ID_FIELD_USER_ID . "` varchar(50) NOT NULL,
+          `" . self::USER_ID_FIELD_CREATED . "` datetime DEFAULT NULL,
+          `" . self::USER_ID_FIELD_LAST_TOUCHED . "` datetime DEFAULT NULL,
+          PRIMARY KEY  (`" . self::USER_ID_FIELD_USER_ID . "`)
+        );";
+
+        dbDelta( $sql );
+    }
 
     /**
      * @param string $userId

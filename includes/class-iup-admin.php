@@ -15,13 +15,13 @@ class Ionic_User_Push_Admin {
         // Store / load data from / to options
         $storeData = self::store_option($option_name, $_POST);
         $options = self::load_options($option_name);
-        $totalUserIds = Ionic_User_Database_Manager::get_total_userIds();
+        $totalUserIds = Ionic_User_UserId_Manager::get_total_userIds();
 
         if (empty(filter_input(INPUT_POST, 'send-push')) === false) {
             // Send push notification
 
             if (filter_input(INPUT_POST, 'send-to-all') !== null) {
-                $userIds = Ionic_User_Database_Manager::get_all_userIds();
+                $userIds = Ionic_User_UserId_Manager::get_all_userIds();
             } else {
                 $userIds = explode(';', filter_input(INPUT_POST, 'send-user-ids'));
             }
@@ -36,7 +36,12 @@ class Ionic_User_Push_Admin {
 
         if ($tab === 'userIds') {
             $pagenum = filter_input(INPUT_GET, 'pagenum') ? absint(filter_input(INPUT_GET, 'pagenum')) : 1;
-            $userIdsPages = Ionic_User_Database_Manager::get_userIds_page_links($pagenum);
+            $userIdsPages = Ionic_User_UserId_Manager::get_userIds_page_links($pagenum);
+        }
+
+        if ($tab === 'history') {
+            $pagenum = filter_input(INPUT_GET, 'pagenum') ? absint(filter_input(INPUT_GET, 'pagenum')) : 1;
+            $historyPages = Ionic_User_History_Manager::get_history_page_links($pagenum);
         }
 
         $template = IUP_PLUGIN_DIR_PATH . 'assets/html/iup-admin-' . $tab . '.html';

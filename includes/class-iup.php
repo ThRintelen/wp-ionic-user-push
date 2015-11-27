@@ -1,15 +1,16 @@
 <?php
 
-require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-require_once __DIR__ . '/class-iup-database-manager.php';
+require_once __DIR__ . '/class-iup-userId-manager.php';
+require_once __DIR__ . '/class-iup-history-manager.php';
 
 class Ionic_User_Push {
 
     public function plugin_activation() {
-        flush_rewrite_rules();
+        $userIdManager = new Ionic_User_UserId_Manager();
+        $userIdManager->create_user_id_table();
 
-        self::create_user_id_table();
-        self::create_push_log_table();
+        $historyManager = new Ionic_User_History_Manager();
+        $historyManager->create_push_history_table();
     }
 
     /**
@@ -28,7 +29,7 @@ class Ionic_User_Push {
                 exit;
             }
 
-            $userIdManager = new Ionic_User_Database_Manager();
+            $userIdManager = new Ionic_User_UserId_Manager();
 
             switch ($params['action']) {
                 case 'store':
@@ -62,35 +63,5 @@ class Ionic_User_Push {
         } else {
             echo json_encode(array('success' => true));
         }
-    }
-
-    private function create_push_log_table() {
-        global $wpdb;
-
-        $table_name = $wpdb->prefix . Ionic_User_Database_Manager::LOG_TABLE_NAME;
-
-        $sql = "CREATE TABLE $table_name (
-          `text` text NOT NULL,
-          `userIds` text DEFAULT NULL,
-          `status` varchar(255) DEFAULT NULL,
-          `send` datetime DEFAULT NULL
-        );";
-
-        dbDelta( $sql );
-    }
-
-    private function create_user_id_table() {
-        global $wpdb;
-
-        $table_name = $wpdb->prefix . Ionic_User_Database_Manager::USER_ID_TABLE_NAME;
-
-        $sql = "CREATE TABLE $table_name (
-          `" . Ionic_User_Database_Manager::USER_ID_FIELD_USER_ID . "` varchar(50) NOT NULL,
-          `" . Ionic_User_Database_Manager::USER_ID_FIELD_CREATED . "` datetime DEFAULT NULL,
-          `" . Ionic_User_Database_Manager::USER_ID_FIELD_LAST_TOUCHED . "` datetime DEFAULT NULL,
-          PRIMARY KEY  (`" . Ionic_User_Database_Manager::USER_ID_FIELD_USER_ID . "`)
-        );";
-
-        dbDelta( $sql );
     }
 }
