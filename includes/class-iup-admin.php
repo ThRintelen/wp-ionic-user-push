@@ -16,15 +16,20 @@ class Ionic_User_Push_Admin {
         $storeData = self::store_option($option_name, $_POST);
         $options = self::load_options($option_name);
 
-        if (empty($_POST['send-push']) === false) {
+        if (empty(filter_input(INPUT_POST, 'send-push')) === false) {
             // Send push notification
-            $return = Ionic_User_Send_Push::sendPushNotification($_POST['send-text'], explode(';', $_POST['send-user-ids']), $options);
+            $return = Ionic_User_Send_Push::sendPushNotification(filter_input(INPUT_POST, 'send-text'), explode(';', filter_input(INPUT_POST, 'send-user-ids')), $options);
             if ( is_wp_error( $return ) ) {
                 $error = $return->get_error_message();
             }
         }
 
         $tab = $_REQUEST['tab'] ? $_REQUEST['tab'] : 'settings';
+
+        if ($tab === 'userIds') {
+            $pagenum = filter_input(INPUT_GET, 'pagenum') ? absint(filter_input(INPUT_GET, 'pagenum')) : 1;
+            $userIdsPages = Ionic_User_Database_Manager::get_userIds_page_links($pagenum);
+        }
 
         $template = IUP_PLUGIN_DIR_PATH . 'assets/html/iup-admin-' . $tab . '.html';
         if (is_file($template) === true) {

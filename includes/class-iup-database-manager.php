@@ -43,4 +43,32 @@ class Ionic_User_Database_Manager {
         $sql = $wpdb->prepare($sql, $userId, $currentDate, $currentDate, $currentDate, $currentDate);
         return $wpdb->query($sql);
     }
+
+    /**
+     * @param int $pagenum
+     * @param int $limit
+     * @return array
+     */
+    public function get_userIds_page_links($pagenum, $limit = 25) {
+        global $wpdb;
+
+        $offset = ( $pagenum - 1 ) * $limit;
+        $total = $wpdb->get_var( "SELECT COUNT(`" . self::USER_ID_FIELD_USER_ID . "`) FROM `{$wpdb->prefix}" . self::USER_ID_TABLE_NAME . "`" );
+        $num_of_pages = ceil( $total / $limit );
+        $results = $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}" . self::USER_ID_TABLE_NAME . "` LIMIT $offset, $limit" );
+
+        $paginate_links = paginate_links( array(
+            'base' => add_query_arg( 'pagenum', '%#%' ),
+            'format' => '',
+            'prev_text' => __( '&laquo;', 'text-domain' ),
+            'next_text' => __( '&raquo;', 'text-domain' ),
+            'total' => $num_of_pages,
+            'current' => $pagenum
+        ) );
+
+        return array(
+            'paginate_links' => $paginate_links,
+            'results' => $results
+        );
+    }
 }
