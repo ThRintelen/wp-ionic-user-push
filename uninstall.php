@@ -13,4 +13,5 @@ delete_option( 'ionic_user_push' );
 
 global $wpdb;
 $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}" . Ionic_User_UserId_Manager::USER_ID_TABLE_NAME );
+$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}" . Ionic_User_Scheduled_Manager::SCHEDULED_TABLE_NAME );
 $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}" . Ionic_User_History_Manager::HISTORY_TABLE_NAME );

@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/class-iup-userId-manager.php';
 require_once __DIR__ . '/class-iup-history-manager.php';
+require_once __DIR__ . '/class-iup-scheduled-manager.php';
 
 class Ionic_User_Push {
 
@@ -11,6 +12,9 @@ class Ionic_User_Push {
 
         $historyManager = new Ionic_User_History_Manager();
         $historyManager->create_push_history_table();
+
+        $scheduledManager = new Ionic_User_Scheduled_Manager();
+        $scheduledManager->create_scheduled_table();
     }
 
     /**

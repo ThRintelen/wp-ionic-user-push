@@ -17,6 +17,25 @@ class Ionic_User_Push_Admin {
         $options = self::load_options($option_name);
         $totalUserIds = Ionic_User_UserId_Manager::get_total_userIds();
 
+        if (empty(filter_input(INPUT_POST, 'store-scheduled-push')) === false) {
+            if (filter_input(INPUT_POST, 'scheduled-send-to-all')) {
+                $userIds = 'all';
+            } else {
+                $userIds = filter_input(INPUT_POST, 'scheduled-user-ids');
+            }
+
+            $scheduledStoreReturn = Ionic_User_Scheduled_Manager::store_scheduled(
+                filter_input(INPUT_POST, 'scheduled-date'),
+                filter_input(INPUT_POST, 'scheduled-time'),
+                filter_input(INPUT_POST, 'scheduled-text'),
+                $userIds
+            );
+
+            if ( is_wp_error( $scheduledStoreReturn ) ) {
+                $error = $scheduledStoreReturn->get_error_message();
+            }
+        }
+
         if (empty(filter_input(INPUT_POST, 'send-push')) === false) {
             // Send push notification
 
@@ -37,6 +56,11 @@ class Ionic_User_Push_Admin {
         if ($tab === 'userIds') {
             $pagenum = filter_input(INPUT_GET, 'pagenum') ? absint(filter_input(INPUT_GET, 'pagenum')) : 1;
             $userIdsPages = Ionic_User_UserId_Manager::get_userIds_page_links($pagenum);
+        }
+
+        if ($tab === 'scheduled') {
+            $pagenum = filter_input(INPUT_GET, 'pagenum') ? absint(filter_input(INPUT_GET, 'pagenum')) : 1;
+            $scheduledPages = Ionic_User_Scheduled_Manager::get_scheduled_page_links($pagenum);
         }
 
         if ($tab === 'history') {

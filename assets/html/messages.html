@@ -1,3 +1,7 @@
+
+<?php if ($scheduledStoreReturn instanceof stdClass) { ?>
+    <div class="updated"><p><strong><?php echo __('Store scheduled push notification', 'menu' ); ?></strong></p></div>
+<?php } ?>
 <?php if ($sendPushReturn instanceof stdClass) { ?>
     <div class="updated"><p><strong><?php printf(__('Push message has been sent (message id: %s)', 'menu' ), $sendPushReturn->message_id); ?></strong></p></div>
 <?php } ?>
