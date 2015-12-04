@@ -30,6 +30,9 @@ if ( is_admin() ) {
     require_once IUP_PLUGIN_DIR_PATH . 'includes/class-iup-admin.php';
 
     add_action('admin_menu', array( 'Ionic_User_Push_Admin', 'admin_menu' ));
+    add_action('admin_head', function() {
+        echo '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">';
+    });
 } else {
     require_once IUP_PLUGIN_DIR_PATH . 'includes/class-iup-userId-manager.php';
 

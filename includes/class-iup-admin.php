@@ -36,6 +36,10 @@ class Ionic_User_Push_Admin {
             }
         }
 
+        if (empty(filter_input(INPUT_GET, 'deleteScheduledId')) === false) {
+            Ionic_User_Scheduled_Manager::delete_scheduled(filter_input(INPUT_GET, 'deleteScheduledId'));
+        }
+
         if (empty(filter_input(INPUT_POST, 'send-push')) === false) {
             // Send push notification
 
