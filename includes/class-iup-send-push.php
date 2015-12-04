@@ -1,8 +1,36 @@
 <?php
 
 require_once __DIR__ . '/class-iup-history-manager.php';
+require_once __DIR__ . '/class-iup-scheduled-manager.php';
+require_once __DIR__ . '/class-iup-userId-manager.php';
+require_once __DIR__ . '/class-iup-admin.php';
 
 class Ionic_User_Send_Push {
+
+    /**
+     * @return WP_Error
+     */
+    public function send_scheduled_push_notification() {
+        $scheduledManager = new Ionic_User_Scheduled_Manager();
+        $result = $scheduledManager->get_passed_scheduled();
+
+        foreach ($result as $row) {
+            if ($row->userIds === 'all') {
+                $userIds = Ionic_User_UserId_Manager::get_all_userIds();
+            } else {
+                $userIds = explode(';', $row->userIds);
+            }
+
+            return $this->send_push_notification(
+                $row->text,
+                $userIds,
+                $this->load_options()
+            );
+
+            // TODO: Delete push
+            // TODO: Doku um den Cron erweitern
+        }
+    }
 
     /**
      * @param string $text
@@ -49,6 +77,20 @@ class Ionic_User_Send_Push {
         }
 
         return $result;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    private function load_options() {
+        $option_string = get_option(Ionic_User_Push_Admin::OPTION_NAME);
+
+        if ($option_string === false) {
+            return array();
+        }
+
+        return json_decode($option_string, true);
     }
 
 }

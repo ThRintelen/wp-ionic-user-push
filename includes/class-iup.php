@@ -68,4 +68,5 @@ class Ionic_User_Push {
             echo json_encode(array('success' => true));
         }
     }
+
 }

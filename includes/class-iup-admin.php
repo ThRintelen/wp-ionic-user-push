@@ -2,19 +2,20 @@
 
 class Ionic_User_Push_Admin {
 
+    const OPTION_NAME = 'ionic_user_push';
+
     public function admin_menu() {
         add_options_page('Ionic User Push Notifications', 'Ionic User Push', 'manage_options', 'ionic-user-push', array('Ionic_User_Push_Admin', 'admin_menu_options'));
     }
 
     public function admin_menu_options () {
-        $option_name = 'ionic_user_push';
         if (!current_user_can('manage_options')) {
             wp_die( __('You do not have sufficient permissions to access this page.') );
         }
 
         // Store / load data from / to options
-        $storeData = self::store_option($option_name, $_POST);
-        $options = self::load_options($option_name);
+        $storeData = self::store_option(self::OPTION_NAME, $_POST);
+        $options = self::load_options(self::OPTION_NAME);
         $totalUserIds = Ionic_User_UserId_Manager::get_total_userIds();
 
         if (empty(filter_input(INPUT_POST, 'store-scheduled-push')) === false) {

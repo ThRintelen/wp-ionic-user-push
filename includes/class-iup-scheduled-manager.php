@@ -42,6 +42,22 @@ class Ionic_User_Scheduled_Manager {
     }
 
     /**
+     * @return array
+     */
+    public function get_passed_scheduled() {
+        global $wpdb;
+
+        $result = $wpdb->get_results(
+            "SELECT * FROM `{$wpdb->prefix}" . self::SCHEDULED_TABLE_NAME . "` WHERE `" . self::SCHEDULED_FIELD_DATETIME . "` < NOW()"
+        );
+        if ($result === null) {
+            return array();
+        }
+
+        return $result;
+    }
+
+    /**
      * @param string $date
      * @param string $time
      * @param string $text
