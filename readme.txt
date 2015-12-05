@@ -1,4 +1,4 @@
-=== Ionic User Push Notification ===
+### Ionic User Push Notification
 Contributors: Thorsten Rintelen
 Donate link:  http://peadig.com/go/facebook-comments-paypal/
 License: GPLv2
