@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Ionic User Push Notification
-Plugin URI: tbd
+Plugin URI: https://github.com/rintynator/wp-ionic-user-push
 Description: Send push notifications to ionic users
 Version: 1.0
 Author: Thorsten Rintelen
