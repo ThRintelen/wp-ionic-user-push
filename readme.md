@@ -1,4 +1,4 @@
-=== Ionic User Push Notification ===
+# Ionic User Push Notification
 
 Contributors: Thorsten Rintelen
 License: GPLv2
@@ -7,11 +7,11 @@ Plugin URL: https://github.com/rintynator/wp-ionic-user-push
 Requires at least: 4.3
 Tested up to: 4.3
 
-== Description ==
+## Description
 
 Send immediately or scheduled push notification to ionic user ids.
 
-== Installation ==
+## Installation
 
 This section describes how to install the plugin and get it working.
 
@@ -20,8 +20,9 @@ This section describes how to install the plugin and get it working.
 3. Go to the Ionic User Push Notification settings and enter basic settings
 4. Plan or send your push notifications!
 
-== Changelog ==
+## Changelog
 
-= 1.0.0 =
+### 1.0.0
 
 * Initial version
+
