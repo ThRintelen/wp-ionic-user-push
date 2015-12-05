@@ -34,7 +34,7 @@ class Ionic_User_Scheduled_Manager {
 
         $sql = "
             DELETE FROM `{$wpdb->prefix}" . self::SCHEDULED_TABLE_NAME . "`
-            WHERE `" . self::SCHEDULED_FIELD_ID . "` = %s
+            WHERE `" . self::SCHEDULED_FIELD_ID . "` = %d
         ";
 
         $sql = $wpdb->prepare($sql, $id);

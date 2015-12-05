@@ -21,14 +21,13 @@ class Ionic_User_Send_Push {
                 $userIds = explode(';', $row->userIds);
             }
 
-            return $this->send_push_notification(
+            $scheduledManager->delete_scheduled($row->id);
+
+            $this->send_push_notification(
                 $row->text,
                 $userIds,
                 $this->load_options()
             );
-
-            // TODO: Delete push
-            // TODO: Doku um den Cron erweitern
         }
     }
 

@@ -3,6 +3,8 @@
 <div class="wrap">
     <?php include __DIR__ . '/tabs.html'; ?>
 
+    <h2><?php echo __("CRON", 'menu' ) ?></h2>
+    <p><i><?php echo __("Align the CRON in to your hoster. This should be called all about every 5 minutes. CRON URL:", 'menu' ) ?></i><br><?php echo get_site_url(); ?>/wp-content/plugins/ionic-user-push/cron.php</p>
     <h2><?php echo __("APP actions", 'menu' ) ?></h2>
     <p><i><?php echo __("Url to call from your app:", 'menu' ) ?></i><br><?php echo get_site_url(); ?>/?ionic-user-id={user-id}&action={action}</p>
     <h3><?php echo __("Json return values", 'menu' ) ?></h3>
