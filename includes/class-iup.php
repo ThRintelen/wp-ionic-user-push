@@ -3,6 +3,7 @@
 require_once __DIR__ . '/class-iup-userId-manager.php';
 require_once __DIR__ . '/class-iup-history-manager.php';
 require_once __DIR__ . '/class-iup-scheduled-manager.php';
+include_once __DIR__ . '/class-iup-send-push.php';
 
 class Ionic_User_Push {
 
@@ -22,6 +23,12 @@ class Ionic_User_Push {
      */
     public function process_parameter() {
         $params = $_REQUEST;
+
+        if (isset($params['do-ionic-user-cron']) === true) {
+            $sendPush = new Ionic_User_Send_Push();
+            $sendPush->send_scheduled_push_notification();
+            exit;
+        }
 
         if (empty($params['ionic-user-id']) === false) {
 
