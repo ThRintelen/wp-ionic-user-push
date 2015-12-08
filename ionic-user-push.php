@@ -30,9 +30,12 @@ if ( is_admin() ) {
     require_once IUP_PLUGIN_DIR_PATH . 'includes/class-iup-admin.php';
 
     add_action('admin_menu', array( 'Ionic_User_Push_Admin', 'admin_menu' ));
-    add_action('admin_head', function() {
-        echo '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">';
-    });
+
+    function load_custom_wp_admin_style() {
+        wp_register_style( 'custom_wp_admin_css', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', false, '1.0.0' );
+        wp_enqueue_style( 'custom_wp_admin_css' );
+    }
+    add_action( 'admin_enqueue_scripts', 'load_custom_wp_admin_style' );
 } else {
     require_once IUP_PLUGIN_DIR_PATH . 'includes/class-iup-userId-manager.php';
 
