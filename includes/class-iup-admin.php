@@ -18,7 +18,7 @@ class Ionic_User_Push_Admin {
         $options = self::load_options(self::OPTION_NAME);
         $totalUserIds = Ionic_User_UserId_Manager::get_total_userIds();
 
-        if (empty(filter_input(INPUT_POST, 'store-scheduled-push')) === false) {
+        if (filter_input(INPUT_POST, 'store-scheduled-push')) {
             if (filter_input(INPUT_POST, 'scheduled-send-to-all')) {
                 $userIds = 'all';
             } else {
@@ -37,11 +37,11 @@ class Ionic_User_Push_Admin {
             }
         }
 
-        if (empty(filter_input(INPUT_GET, 'deleteScheduledId')) === false) {
+        if (filter_input(INPUT_GET, 'deleteScheduledId')) {
             Ionic_User_Scheduled_Manager::delete_scheduled(filter_input(INPUT_GET, 'deleteScheduledId'));
         }
 
-        if (empty(filter_input(INPUT_POST, 'send-push')) === false) {
+        if (filter_input(INPUT_POST, 'send-push')) {
             // Send push notification
 
             if (filter_input(INPUT_POST, 'send-to-all') !== null) {
