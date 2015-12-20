@@ -3,7 +3,7 @@
 Plugin Name: Ionic User Push Notification
 Plugin URI: https://github.com/rintynator/wp-ionic-user-push
 Description: Send push notifications to ionic users
-Version: 1.0
+Version: 1.1
 Author: Thorsten Rintelen
 Author URI: http://www.clever-code.de
 License: GPLv2
@@ -36,6 +36,7 @@ if ( is_admin() ) {
         wp_enqueue_style( 'custom_wp_admin_css' );
     }
     add_action( 'admin_enqueue_scripts', 'load_custom_wp_admin_style' );
+    add_action( 'transition_post_status', array( 'Ionic_User_Send_Push', 'send_push_for_new_post'), 2, 3);
 } else {
     require_once IUP_PLUGIN_DIR_PATH . 'includes/class-iup-userId-manager.php';
 

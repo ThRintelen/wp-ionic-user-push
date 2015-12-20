@@ -102,7 +102,7 @@ class Ionic_User_Push_Admin {
         $option = array();
         $storeData = false;
 
-        $options = array('appId', 'privateApiKey');
+        $options = array('appId', 'privateApiKey', 'sendUpdatePost', 'sendNewPost');
 
         foreach ($options as $name) {
             if (isset($post[$name])) {

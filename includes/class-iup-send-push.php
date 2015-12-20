@@ -8,6 +8,47 @@ require_once __DIR__ . '/class-iup-admin.php';
 class Ionic_User_Send_Push {
 
     /**
+     * Send push notifications for new posts
+     *
+     * @param string $new_status
+     * @param string $old_status
+     * @param WP_Post $post
+     */
+    public function send_push_for_new_post($new_status, $old_status, WP_Post $post) {
+        $options = self::load_options();
+        $doSendPush = false;
+
+        if ('post' !== get_post_type($post)) {
+            return;
+        }
+
+        if (
+            ($old_status === 'publish' && (bool) $options['sendUpdatePost'] === true)
+            || ($new_status === 'publish' && (bool) $options['sendNewPost'] === true)
+
+        ) {
+            $doSendPush = true;
+        }
+
+        if ($doSendPush === false) {
+            return;
+        }
+
+        $title = get_the_title($post);
+        $payload = array(
+            'title' => $title,
+            'url' => get_permalink($post),
+            'id' => get_the_ID($post),
+            'author' => get_the_author_meta('display_name', $post->post_author)
+        );
+
+        $userIds = Ionic_User_UserId_Manager::get_all_userIds();
+        $options = self::load_options();
+
+        self::send_push_notification($title, $userIds, $options, $payload);
+    }
+
+    /**
      * @return WP_Error
      */
     public function send_scheduled_push_notification() {
@@ -35,9 +76,10 @@ class Ionic_User_Send_Push {
      * @param string $text
      * @param array $userIds
      * @param array $options
+     * @param array $payload
      * @return WP_Error
      */
-    public function send_push_notification($text, array $userIds, array $options) {
+    public function send_push_notification($text, array $userIds, array $options, array $payload = array()) {
         if (empty($text)) {
             return new WP_Error( 'broke', __( "Missing text to send push notification!", "menu" ) );
         }
@@ -53,6 +95,12 @@ class Ionic_User_Send_Push {
         $data = array(
             'user_ids' => $userIds,
             'notification' => array('alert' => $text),
+            'ios' => array(
+                'payload' => $payload
+            ),
+            'android' => array(
+                'payload' => $payload
+            )
         );
 
         $ch = curl_init();
