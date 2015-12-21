@@ -23,6 +23,10 @@ This section describes how to install the plugin and get it working.
 
 ## Changelog
 
+### 1.1.1
+
+* Fix payload error
+
 ### 1.1.0
 
 * Send optional push notification to all user ids for a new post (Thnaks to Ayoub Arbouchi)
