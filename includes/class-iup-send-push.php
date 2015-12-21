@@ -94,12 +94,14 @@ class Ionic_User_Send_Push {
 
         $data = array(
             'user_ids' => $userIds,
-            'notification' => array('alert' => $text),
-            'ios' => array(
-                'payload' => $payload
-            ),
-            'android' => array(
-                'payload' => $payload
+            'notification' => array(
+                'alert' => $text,
+                'ios' => array(
+                    'payload' => $payload
+                ),
+                'android' => array(
+                    'payload' => $payload
+                )
             )
         );
 
